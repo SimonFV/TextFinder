@@ -12,14 +12,22 @@ package textfindersimon;
 public class ArchiveNode {
     
     private ArchiveNode next, prev;
-    private String direction, name, date, size;
+    private String direction;
+    private char[] name;
+    private double[] date;
+    private double size;
+    private int position;
     private boolean selected;
     
-    public ArchiveNode(String direction){
+    public ArchiveNode(String direction, char[] name, double[] date, double size){
         this.next = null;
         this.prev = null;
         this.direction = direction;
+        this.name = name;
+        this.date = date;
+        this.size = size;
         this.selected = false;
+        this.position = 0;
     }
     
     //getters & setters
@@ -47,27 +55,27 @@ public class ArchiveNode {
         this.direction = direction;
     }
 
-    public String getName() {
+    public char[] getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(char[] name) {
         this.name = name;
     }
 
-    public String getDate() {
+    public double[] getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(double[] date) {
         this.date = date;
     }
 
-    public String getSize() {
+    public double getSize() {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(double size) {
         this.size = size;
     }
 
@@ -77,6 +85,14 @@ public class ArchiveNode {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public int getPosition() {
+        return position;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
     }
     
     

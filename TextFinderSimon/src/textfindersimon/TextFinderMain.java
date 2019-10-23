@@ -121,14 +121,18 @@ public class TextFinderMain extends Application{
         
         //TEST
         
-        this.list.addLast("asd");
+        this.list.addLast("asd", new char[]{'m','c','j'}, new double[]{5,3,2019}, 43);
+        this.list.addLast("asd", new char[]{'a','f','3'}, new double[]{20,4,2020}, 50);
+        this.list.addLast("asd", new char[]{'q','a','c'}, new double[]{3,10,2017}, 20);
+        this.list.addLast("asd", new char[]{'3','e','d'}, new double[]{22,9,2018}, 10);
+        this.list.sortList();
         this.list.uptdateLibrary(libraryPane);
+        
         
         
         this.scene = new Scene(root,800,600);
         this.window.setScene(scene);
         this.window.show();
-        
         
         
     }
