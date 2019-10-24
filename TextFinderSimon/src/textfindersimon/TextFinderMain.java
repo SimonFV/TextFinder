@@ -1,16 +1,19 @@
 
 package textfindersimon;
 
+import java.io.File;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -51,12 +54,15 @@ public class TextFinderMain extends Application{
         name.setLayoutX(5);
         name.setLayoutY(5);
         Label date = new Label("Fecha");
-        date.setLayoutX(90);
+        date.setLayoutX(150);
         date.setLayoutY(5);
         Label size = new Label("Tamaño");
-        size.setLayoutX(180);
+        size.setLayoutX(230);
         size.setLayoutY(5);
-        libraryPaneRoot.getChildren().addAll(name, date, size);
+        CheckBox selectAll = new CheckBox();
+        selectAll.setLayoutX(300);
+        selectAll.setLayoutY(5);
+        libraryPaneRoot.getChildren().addAll(name, date, size, selectAll);
         
         //Label prueba de resultados
         Label result1 = new Label("resultado 1");
@@ -76,7 +82,22 @@ public class TextFinderMain extends Application{
         Button fileButton = new Button("Añadir archivo");  //Boton para buscar archivos
         GridPane.setConstraints(fileButton, 0, 0);
         fileButton.setOnMouseClicked(e->{
-            System.out.println("Buscando...");
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Buscar Documento");
+            // Agregar filtros para facilitar la busqueda
+            fileChooser.getExtensionFilters().addAll(
+                new FileChooser.ExtensionFilter("Word", "*.docx"),
+                new FileChooser.ExtensionFilter("PDF", "*.pdf"),
+                new FileChooser.ExtensionFilter("Texto", "*.txt")
+            );
+            File textFile = fileChooser.showOpenDialog(null);
+            if(textFile != null){
+                String direction = textFile.getPath();
+                System.out.println(direction);
+
+                AddToLibrary.add(direction, this.list);
+                list.uptdateLibrary(libraryPane);
+            }
         });
         
         
@@ -106,7 +127,7 @@ public class TextFinderMain extends Application{
         libraryScroll.setContent(libraryPane);
         libraryScroll.setLayoutX(5);
         libraryScroll.setLayoutY(20);
-        libraryScroll.setPrefSize(220, 540);
+        libraryScroll.setPrefSize(320, 590);
         libraryPaneRoot.getChildren().add(libraryScroll);
         BorderPane.setMargin(libraryPaneRoot, insetsRoot);
         
@@ -121,16 +142,16 @@ public class TextFinderMain extends Application{
         
         //TEST
         
-        this.list.addLast("asd", new char[]{'m','c','j'}, new double[]{5,3,2019}, 43);
-        this.list.addLast("asd", new char[]{'a','f','3'}, new double[]{20,4,2020}, 50);
-        this.list.addLast("asd", new char[]{'q','a','c'}, new double[]{3,10,2017}, 20);
-        this.list.addLast("asd", new char[]{'3','e','d'}, new double[]{22,9,2018}, 10);
+        this.list.addLast("asd", new char[]{'m','c','j'}, new int[]{2019, 3, 5}, 43, new CheckBox());
+        this.list.addLast("asd", new char[]{'a','f','3'}, new int[]{2018, 03, 10}, 50, new CheckBox());
+        this.list.addLast("asd", new char[]{'3','a'}, new int[]{2019, 3, 6}, 20, new CheckBox());
+        this.list.addLast("asd", new char[]{'3','a', 'b'}, new int[]{2018, 3, 5}, 10, new CheckBox());
         this.list.sortList();
         this.list.uptdateLibrary(libraryPane);
         
         
         
-        this.scene = new Scene(root,800,600);
+        this.scene = new Scene(root,1200,700);
         this.window.setScene(scene);
         this.window.show();
         

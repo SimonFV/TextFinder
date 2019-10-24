@@ -5,6 +5,8 @@
  */
 package textfindersimon;
 
+import javafx.scene.control.CheckBox;
+
 /**
  *
  * @author sfv02
@@ -14,19 +16,19 @@ public class ArchiveNode {
     private ArchiveNode next, prev;
     private String direction;
     private char[] name;
-    private double[] date;
+    private int[] date;
     private double size;
     private int position;
-    private boolean selected;
+    private CheckBox checkBox;
     
-    public ArchiveNode(String direction, char[] name, double[] date, double size){
+    public ArchiveNode(String direction, char[] name, int[] date, double size, CheckBox checkBox){
         this.next = null;
         this.prev = null;
         this.direction = direction;
         this.name = name;
         this.date = date;
         this.size = size;
-        this.selected = false;
+        this.checkBox = checkBox;
         this.position = 0;
     }
     
@@ -63,11 +65,11 @@ public class ArchiveNode {
         this.name = name;
     }
 
-    public double[] getDate() {
+    public int[] getDate() {
         return date;
     }
 
-    public void setDate(double[] date) {
+    public void setDate(int[] date) {
         this.date = date;
     }
 
@@ -79,14 +81,6 @@ public class ArchiveNode {
         this.size = size;
     }
 
-    public boolean isSelected() {
-        return selected;
-    }
-
-    public void setSelected(boolean selected) {
-        this.selected = selected;
-    }
-
     public int getPosition() {
         return position;
     }
@@ -94,7 +88,14 @@ public class ArchiveNode {
     public void setPosition(int position) {
         this.position = position;
     }
-    
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
+
+    public void setCheckBox(boolean selected) {
+        this.checkBox.setSelected(selected);
+    }
     
     
 }

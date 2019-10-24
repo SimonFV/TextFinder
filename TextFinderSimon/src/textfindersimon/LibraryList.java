@@ -1,6 +1,8 @@
 
 package textfindersimon;
 
+import java.util.Arrays;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
@@ -22,12 +24,12 @@ public class LibraryList {
     }
     
     //Añadir archivos a la lista enlazada
-    public void addLast(String direction, char[] name, double[] date, double size){
+    public void addLast(String direction, char[] name, int[] date, double size, CheckBox checkBox){
         if(this.first==null){
-            this.first = new ArchiveNode(direction, name, date, size);
+            this.first = new ArchiveNode(direction, name, date, size, checkBox);
             this.last = this.first;
         }else{
-            this.last.setNext(new ArchiveNode(direction, name, date, size));
+            this.last.setNext(new ArchiveNode(direction, name, date, size, checkBox));
             this.last.getNext().setPrev(this.last);
             this.last = this.last.getNext();
         }
@@ -37,22 +39,32 @@ public class LibraryList {
     
     //Añadir labels al grid de la biblioteca
     public void uptdateLibrary(GridPane libraryPane){
+        libraryPane.getChildren().clear();
         int i = 0;
         if(this.first!=null){
             ArchiveNode temp = this.first;
-            while(true){
-                if(temp.getNext()==null){
-                    Label name = new Label(new String(temp.getName()));
-                    GridPane.setConstraints(name, 0, i);
-                    libraryPane.getChildren().add(name);
-                    break;
+            while(temp!=null){
+                Label nameL = new Label(new String(temp.getName()));
+                GridPane.setConstraints(nameL, 0, i);
+                Label dateL = new Label(Arrays.toString(temp.getDate()));
+                GridPane.setConstraints(dateL, 1, i);
+                double sizeN = temp.getSize();
+                String sizeS;
+                if(sizeN>1024 && sizeN<1024*1024){
+                    sizeN = Math.round(sizeN/1024);
+                    sizeS = Double.toString(sizeN)+" KB";
+                }else if(sizeN>1024*1024){
+                    sizeN = Math.round(sizeN/(1024*1024));
+                    sizeS = Double.toString(sizeN)+" MB";
                 }else{
-                    Label name = new Label(new String(temp.getName()));
-                    GridPane.setConstraints(name, 0, i);
-                    libraryPane.getChildren().add(name);
-                    temp = temp.getNext();
-                    i++;
+                    sizeS = Double.toString(sizeN)+" B";
                 }
+                Label sizeL = new Label(sizeS);
+                GridPane.setConstraints(sizeL, 2, i);
+                GridPane.setConstraints(temp.getCheckBox(), 3, i);
+                libraryPane.getChildren().addAll(nameL, dateL, sizeL, temp.getCheckBox());
+                temp = temp.getNext();
+                i++;
             }
         }
     }
@@ -61,10 +73,9 @@ public class LibraryList {
     public void sortList(){
         LibraryList temp = new LibraryList();
         if(sortMode.equals("NAME_TO_BOT")){
-            temp = SortLibrary.nameSort(this);
+            temp = SortLibrary.dateSort(this);
             this.first = temp.first;
             this.last = temp.last;
-            
         }
     }
     
