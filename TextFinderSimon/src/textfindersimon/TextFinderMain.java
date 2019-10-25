@@ -142,10 +142,10 @@ public class TextFinderMain extends Application{
         
         //TEST
         
-        this.list.addLast("asd", new char[]{'m','c','j'}, new int[]{2019, 3, 5}, 43, new CheckBox());
-        this.list.addLast("asd", new char[]{'a','f','3'}, new int[]{2018, 03, 10}, 50, new CheckBox());
-        this.list.addLast("asd", new char[]{'3','a'}, new int[]{2019, 3, 6}, 20, new CheckBox());
-        this.list.addLast("asd", new char[]{'3','a', 'b'}, new int[]{2018, 3, 5}, 10, new CheckBox());
+        this.list.addLast("asd", new char[]{'m','c','j'}, new int[]{2019, 3, 5}, 221250, new CheckBox());
+        this.list.addLast("asd", new char[]{'a','f','3'}, new int[]{2018, 03, 310}, 26453344, new CheckBox());
+        this.list.addLast("asd", new char[]{'3','a'}, new int[]{2019, 3, 6}, 29, new CheckBox());
+        this.list.addLast("asd", new char[]{'3','a', 'b'}, new int[]{2018, 3, 5}, 12372, new CheckBox());
         this.list.sortList();
         this.list.uptdateLibrary(libraryPane);
         

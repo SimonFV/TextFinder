@@ -17,11 +17,11 @@ public class ArchiveNode {
     private String direction;
     private char[] name;
     private int[] date;
-    private double size;
+    private int size;
     private int position;
     private CheckBox checkBox;
     
-    public ArchiveNode(String direction, char[] name, int[] date, double size, CheckBox checkBox){
+    public ArchiveNode(String direction, char[] name, int[] date, int size, CheckBox checkBox){
         this.next = null;
         this.prev = null;
         this.direction = direction;
@@ -73,11 +73,11 @@ public class ArchiveNode {
         this.date = date;
     }
 
-    public double getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(double size) {
+    public void setSize(int size) {
         this.size = size;
     }
 

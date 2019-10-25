@@ -24,7 +24,7 @@ public class LibraryList {
     }
     
     //Añadir archivos a la lista enlazada
-    public void addLast(String direction, char[] name, int[] date, double size, CheckBox checkBox){
+    public void addLast(String direction, char[] name, int[] date, int size, CheckBox checkBox){
         if(this.first==null){
             this.first = new ArchiveNode(direction, name, date, size, checkBox);
             this.last = this.first;
@@ -48,16 +48,16 @@ public class LibraryList {
                 GridPane.setConstraints(nameL, 0, i);
                 Label dateL = new Label(Arrays.toString(temp.getDate()));
                 GridPane.setConstraints(dateL, 1, i);
-                double sizeN = temp.getSize();
+                int sizeN = temp.getSize();
                 String sizeS;
                 if(sizeN>1024 && sizeN<1024*1024){
                     sizeN = Math.round(sizeN/1024);
-                    sizeS = Double.toString(sizeN)+" KB";
+                    sizeS = Integer.toString(sizeN)+" KB";
                 }else if(sizeN>1024*1024){
                     sizeN = Math.round(sizeN/(1024*1024));
-                    sizeS = Double.toString(sizeN)+" MB";
+                    sizeS = Integer.toString(sizeN)+" MB";
                 }else{
-                    sizeS = Double.toString(sizeN)+" B";
+                    sizeS = Integer.toString(sizeN)+" B";
                 }
                 Label sizeL = new Label(sizeS);
                 GridPane.setConstraints(sizeL, 2, i);
@@ -71,9 +71,9 @@ public class LibraryList {
     
     //Ordenar la lista
     public void sortList(){
-        LibraryList temp = new LibraryList();
+        LibraryList temp;
         if(sortMode.equals("NAME_TO_BOT")){
-            temp = SortLibrary.dateSort(this);
+            temp = SortLibrary.sizeSort(this);
             this.first = temp.first;
             this.last = temp.last;
         }

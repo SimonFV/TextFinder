@@ -91,6 +91,71 @@ public class SortLibrary {
         }
     }
     
+    //Ordena la lista por tamaño de archivo con RadixSort
+    public static LibraryList sizeSort(LibraryList list){
+        if(list.getSize()>1){
+            ArchiveNode temp = list.getFirst();
+            //Obtiene el numero con mayor cantidad de digitos
+            int max = temp.getSize();
+            while(temp.getNext()!=null){
+                if(temp.getNext().getSize()>max){
+                    max=temp.getNext().getSize();
+                }
+                temp=temp.getNext();
+            }
+            String[] maxS = Integer.toString(max).split("");
+            max = maxS.length;
+            int i = 0;
+            while(i<max){
+                RSBucketList bucketlist = new RSBucketList();
+                temp = list.getFirst();
+                
+                while(temp!=null){
+                    bucketlist.getBucket(conv(temp.getSize(),max)[i]).addNode(temp);
+                    temp=temp.getNext();
+                }
+                
+                LibraryList tempL = new LibraryList();
+                int z = 0;
+                while(z<10){
+                    RSBucket tempB = bucketlist.getBucket(z);
+                    while(tempB.bot!=null){
+                        tempL.addLast(tempB.bot.node.getDirection(), 
+                                tempB.bot.node.getName(), 
+                                tempB.bot.node.getDate(), 
+                                tempB.bot.node.getSize(), 
+                                tempB.bot.node.getCheckBox());
+                        tempB=tempB.bot;
+                    }
+                    z++;
+                }
+                list = tempL;
+                i++;
+            }
+        }
+        
+        return list;
+    }
+    
+    //Convierte un doble en una array de enteros
+    public static int[] conv(int d, int max){
+        String[] numberS = Integer.toString(d).split("");
+        int[] number = new int[max];
+        int i = 0;
+        int j = numberS.length-1;
+        while(i<max){
+            if(j>=0){
+                number[i]=Integer.parseInt(numberS[j]);
+                j--;
+            }else{
+                number[i]=0;
+            }
+            i++;
+        }
+        return number;
+    }
+    
+    
     //returna la lista menor al pivote
     private static LibraryList firstHalf(LibraryList list, ArchiveNode pivot){
         LibraryList firstHalf = new LibraryList();

@@ -37,7 +37,8 @@ public class AddToLibrary {
                 Integer.parseInt(dateS[2])};
             
             //Obtiene el tamaño del archivo
-            double size = file.length();
+            double sizeD = file.length();
+            int size = (int) Math.round(sizeD);
             //redondear: Math.round(1.1);   Math.ceil(2.7) "unidad superior"
             
             //Añade el archivo a la lista
