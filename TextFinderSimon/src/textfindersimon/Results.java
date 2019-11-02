@@ -15,11 +15,11 @@ public class Results {
     public static void generate(String[] words, WordsTree tree, GridPane resultPane){
         resultPane.getChildren().clear();
         Coincidence temp = null;
+        int j = 0;
         for(String word : words){
             if(tree.getCoincidences(word)!=null){
                 temp = tree.getCoincidences(word).first;
             }
-            int j = 0;
             while(temp!=null){
                 temp.setBody(temp.topText, temp.botText, temp.midText, word);
                 GridPane.setConstraints(temp.getBody(), 0,j);

@@ -2,12 +2,17 @@
 package textfindersimon;
 
 /**
- *
+ * Clase que ordena listas dependiendo del modo deseado.
  * @author sfv02
  */
 public class SortLibrary {
     
-    //Ordena la lista por nombre con QuickSort
+    
+    /**
+    * Método que ordena la lista por nombre con QuickSort.
+    * @param list lista a ordenar
+    * @return list lista ordenada por nombre
+    */
     public static LibraryList nameSort(LibraryList list){
         LibraryList sorted = list;
         if(list.getSize()>1){
@@ -64,7 +69,11 @@ public class SortLibrary {
         return node1.length<=node2.length;
     }
     
-    //Ordena la lista por fecha con bubblesort
+    /**
+    * Método que ordena la lista por fecha con BubbleSort.
+    * @param list lista a ordenar
+    * @return list lista ordenada por nombre
+    */
     public static LibraryList dateSort(LibraryList list){
         LibraryList sorted = list;
         if(list.getSize()>1){
@@ -98,7 +107,12 @@ public class SortLibrary {
         }
     }
     
-    //Ordena la lista por tamaño de archivo con RadixSort
+     
+    /**
+    * Método que ordena la lista por tamaño de archivo con RadixSort
+    * @param list lista a ordenar
+    * @return list lista ordenada por nombre
+    */
     public static LibraryList sizeSort(LibraryList list){
         if(list.getSize()>1){
             ArchiveNode temp = list.getFirst();

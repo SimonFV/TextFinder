@@ -10,6 +10,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.text.PDFTextStripper;
 import static org.apache.poi.hssf.usermodel.HeaderFooter.file;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
@@ -17,7 +19,7 @@ import org.apache.poi.xwpf.extractor.XWPFWordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 
 /**
- *
+ * Clase que realiza las lecturas de los archivos para extraer las palabras o administrar la biblioteca.
  * @author sfv02
  */
 public class Searcher {
@@ -42,7 +44,7 @@ public class Searcher {
             if (m > 0) {
                 extension = direction.substring(m+1);
             }
-            if(false){  //extension.equals("docx")
+            if(extension.equals("docx")){
                 //DOCX
                 FileInputStream fis = new FileInputStream(direction);
                 XWPFDocument document = new XWPFDocument(fis);
@@ -57,7 +59,13 @@ public class Searcher {
                     text = text + lineS + "\n";
                 }
             }else{
-                
+                //PDF
+                PDDocument document = PDDocument.load(new File(direction));
+                if (!document.isEncrypted()) {
+                    PDFTextStripper stripper = new PDFTextStripper();
+                    text = stripper.getText(document);
+                }
+                document.close();
             }
             
             textSplit = text.split("\n");
