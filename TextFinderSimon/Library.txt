@@ -1,0 +1,2 @@
+C:\Users\sfv02\Documents\NetBeansProjects\TextFinderSimon\Prueba 3.txt
+C:\Users\sfv02\Documents\NetBeansProjects\TextFinderSimon\test 1.txt

@@ -39,16 +39,23 @@ public class SortLibrary {
             }
         }
         return sorted;
-        
     }
     
     //Compara los nombres
-    private static boolean isSmaller(char[] node1, char[] node2){
+    public static boolean isSmaller(char[] node1, char[] node2){
         int i = 0;
         while(i<node1.length && i<node2.length){
-            if(node1[i]<node2[i]){
+            char n1 = node1[i];
+            char n2 = node2[i];
+            if(Character.isUpperCase(node1[i])){
+                n1 = Character.toLowerCase(node1[i]);
+            }
+            if(Character.isUpperCase(node2[i])){
+                n2 = Character.toLowerCase(node2[i]);
+            }
+            if(n1<n2){
                 return true;
-            }else if(node1[i]>node2[i]){
+            }else if(n1>n2){
                 return false;
             }else{
                 i++;
@@ -65,7 +72,7 @@ public class SortLibrary {
             for(i=0;i<list.getSize()-1;i++){
                 for(j=0;j<list.getSize()-i-1;j++){
                     if(isNewer(list.getNode(j).getDate(),list.getNode(j+1).getDate())){
-                        swap(list.getNode(j),list.getNode(j+1));
+                        swap(list.getNode(j),list.getNode(j+1),list);
                     }
                 }
             }
@@ -133,11 +140,10 @@ public class SortLibrary {
                 i++;
             }
         }
-        
         return list;
     }
     
-    //Convierte un doble en una array de enteros
+    //Convierte un entero en una array de enteros
     public static int[] conv(int d, int max){
         String[] numberS = Integer.toString(d).split("");
         int[] number = new int[max];
@@ -188,9 +194,9 @@ public class SortLibrary {
     }
     
     //intercambia la informacion de los nodos
-    private static void swap(ArchiveNode node1, ArchiveNode node2){
+    private static void swap(ArchiveNode node1, ArchiveNode node2, LibraryList list){
         ArchiveNode temp = new ArchiveNode(node1.getDirection(), node1.getName(), 
-                node1.getDate(), node1.getSize(), node1.getCheckBox());
+                node1.getDate(), node1.getSize(), node1.getCheckBox(), list);
         node1.setDirection(node2.getDirection());
         node1.setName(node2.getName());
         node1.setDate(node2.getDate());

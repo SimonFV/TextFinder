@@ -7,7 +7,6 @@ import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -17,8 +16,8 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- *
- * @author sfv02
+ * Clase que crea y muestra los elementos principales de la interfaz.
+ * @author: Simon Fallas V.
  */
 public class TextFinderMain extends Application{
     
@@ -50,24 +49,47 @@ public class TextFinderMain extends Application{
         GridPane searchPane = new GridPane();
         
         //Titulos de las columnas de la biblioteca
-        Label name = new Label("Nombre");
+        Button name = new Button("Nombre");
+        name.setOnMouseClicked(e->{
+            this.list.setSortMode("NAME_TO_BOT");
+            this.list.sortList();
+            this.list.uptdateLibrary(libraryPane);
+        });
         name.setLayoutX(5);
         name.setLayoutY(5);
-        Label date = new Label("Fecha");
+        Button date = new Button("Fecha");
+        date.setOnMouseClicked(e->{
+            this.list.setSortMode("DATE_TO_BOT");
+            this.list.sortList();
+            this.list.uptdateLibrary(libraryPane);
+        });
         date.setLayoutX(150);
         date.setLayoutY(5);
-        Label size = new Label("Tamaño");
+        Button size = new Button("Tamaño");
+        size.setOnMouseClicked(e->{
+            this.list.setSortMode("SIZE_TO_BOT");
+            this.list.sortList();
+            this.list.uptdateLibrary(libraryPane);
+        });
         size.setLayoutX(230);
         size.setLayoutY(5);
-        CheckBox selectAll = new CheckBox();
-        selectAll.setLayoutX(300);
-        selectAll.setLayoutY(5);
-        libraryPaneRoot.getChildren().addAll(name, date, size, selectAll);
         
-        //Label prueba de resultados
-        Label result1 = new Label("resultado 1");
-        GridPane.setConstraints(result1, 0, 0);
-        resultPane.getChildren().add(result1);
+        //Eliminar archivo
+        Button deleteB = new Button("Borrar seleccionados");
+        deleteB.setOnMouseClicked(e->{
+            this.list.delete();
+            LibraryList temp = new LibraryList();
+            Searcher.loadLibrary(temp);
+            this.list = temp;
+            this.list.sortList();
+            this.list.uptdateLibrary(libraryPane);
+        });
+        deleteB.setLayoutX(200);
+        deleteB.setLayoutY(630);
+        
+        
+        libraryPaneRoot.getChildren().addAll(name, date, size, deleteB);
+        
         
         //Contenido del panel de busqueda
         Label searchHere = new Label("                        Ingrese la palabra o frase a buscar: ");
@@ -78,6 +100,11 @@ public class TextFinderMain extends Application{
         
         Button searchButton = new Button("Buscar");  //Boton para buscar texto
         GridPane.setConstraints(searchButton, 3, 0);
+        searchButton.setOnMouseClicked(e->{
+            if(getWord.getText()!=null){
+                Results.generate(Searcher.separate(getWord.getText()), Searcher.tree, resultPane);
+            }
+        });
         
         Button fileButton = new Button("Añadir archivo");  //Boton para buscar archivos
         GridPane.setConstraints(fileButton, 0, 0);
@@ -96,6 +123,7 @@ public class TextFinderMain extends Application{
                 System.out.println(direction);
 
                 AddToLibrary.add(direction, this.list);
+                Searcher.writeFile(direction);
                 list.uptdateLibrary(libraryPane);
             }
         });
@@ -113,6 +141,10 @@ public class TextFinderMain extends Application{
         libraryPane.setHgap(5);
         libraryPane.setVgap(5);
         
+        //Estilo del panel de resultados
+        resultPane.setHgap(5);
+        resultPane.setVgap(5);
+        
         //Estilo de los paneles scroll
         libraryScroll.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
         resultScroll.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
@@ -126,7 +158,7 @@ public class TextFinderMain extends Application{
         //Añadido los paneles de contenido a los paneles de scroll
         libraryScroll.setContent(libraryPane);
         libraryScroll.setLayoutX(5);
-        libraryScroll.setLayoutY(20);
+        libraryScroll.setLayoutY(32);
         libraryScroll.setPrefSize(320, 590);
         libraryPaneRoot.getChildren().add(libraryScroll);
         BorderPane.setMargin(libraryPaneRoot, insetsRoot);
@@ -140,22 +172,15 @@ public class TextFinderMain extends Application{
         root.setCenter(resultScroll);
         root.setTop(searchPane);
         
-        //TEST
-        
-        this.list.addLast("asd", new char[]{'m','c','j'}, new int[]{2019, 3, 5}, 221250, new CheckBox());
-        this.list.addLast("asd", new char[]{'a','f','3'}, new int[]{2018, 03, 310}, 26453344, new CheckBox());
-        this.list.addLast("asd", new char[]{'3','a'}, new int[]{2019, 3, 6}, 29, new CheckBox());
-        this.list.addLast("asd", new char[]{'3','a', 'b'}, new int[]{2018, 3, 5}, 12372, new CheckBox());
-        this.list.sortList();
+        Searcher.loadLibrary(this.list);
         this.list.uptdateLibrary(libraryPane);
         
         
         
-        this.scene = new Scene(root,1200,700);
+        this.scene = new Scene(root,1300,700);
         this.window.setScene(scene);
         this.window.show();
         
-        
     }
-    
+
 }

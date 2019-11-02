@@ -8,8 +8,8 @@ package textfindersimon;
 import javafx.scene.control.CheckBox;
 
 /**
- *
- * @author sfv02
+ * Clase que funciona como nodo de la lista biblioteca.
+ * @author: Simon Fallas V.
  */
 public class ArchiveNode {
     
@@ -21,7 +21,17 @@ public class ArchiveNode {
     private int position;
     private CheckBox checkBox;
     
-    public ArchiveNode(String direction, char[] name, int[] date, int size, CheckBox checkBox){
+    /**
+    * Método constructor. Establece todos los valores generales por defecto.
+    * @param direction Dirección del archivo en el disco.
+    * @param name nombre del archivo.
+    * @param date fecha de creación del acrhivo.
+    * @param size tamaño del acrhivo.
+    * @param checkBox checkbox que indica si el archivo está seleccionado.
+    * @param library biblioteca de archivos.
+    */
+    public ArchiveNode(String direction, char[] name, int[] date, int size,
+            CheckBox checkBox, LibraryList library){
         this.next = null;
         this.prev = null;
         this.direction = direction;
@@ -30,6 +40,11 @@ public class ArchiveNode {
         this.size = size;
         this.checkBox = checkBox;
         this.position = 0;
+        
+        this.checkBox.setOnMouseClicked(e->{
+            Searcher.tree = new WordsTree();
+            library.fillTree(Searcher.tree);
+        });
     }
     
     //getters & setters

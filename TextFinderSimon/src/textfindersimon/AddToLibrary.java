@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import javafx.scene.control.CheckBox;
 
@@ -41,13 +40,9 @@ public class AddToLibrary {
             int size = (int) Math.round(sizeD);
             //redondear: Math.round(1.1);   Math.ceil(2.7) "unidad superior"
             
-            //Añade el archivo a la lista
+            //Añade el archivo a la lista y lo guarda
             list.addLast(direction, name, date, size, new CheckBox());
             list.sortList();
-            
-            System.out.println(name);
-            System.out.println(Arrays.toString(date));
-            System.out.println(size);
             
 	}catch (IOException e) {
             System.out.println("archivo no encontrado");

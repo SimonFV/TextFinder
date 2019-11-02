@@ -1,0 +1,5 @@
+Este se controlara por instrucciones enviadas por WiFi,
+desde un cliente en Python, hasta el esp8266 que funciona como servidor.
+El auto tiene la capacidad de cambiar sus niveles de potencia en los motores al valor deseado,
+cuenta con luces delanteras, de frenado, y direccionales, y además puede enviar estadísticas
+sobre la presencia de luz en el entorno y el estado de carga de sus baterías.
